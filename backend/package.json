@@ -1,0 +1,28 @@
+{
+  "name": "fyndly",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/MohammadAlam1/Fyndly#readme",
+  "bugs": {
+    "url": "https://github.com/MohammadAlam1/Fyndly/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MohammadAlam1/Fyndly.git"
+  },
+  "license": "ISC",
+  "author": "Mohammad Alam Ansari 819",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "dotnet": "^1.1.4",
+    "express": "^5.2.1",
+    "nodemon": "^3.1.14"
+  }
+}
