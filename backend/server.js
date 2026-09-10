@@ -1,39 +1,34 @@
 import { checkBeforLogin } from "./middleware/login.js";
 import "dotenv/config";
-import returnAllExpressModuleFunction from "express";
-
-const app = returnAllExpressModuleFunction();
+import express from "express";
+import { connectToClusterAndDB } from "./config/databaseMongo.js";
+import { User } from "./models/user.js";
+const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-  res.send("hellooooo");
-});
-app.post("/", (req, res) => {
-  res.send("hellooooo saved");
-});
-app.get("/home/user", (req, res) => {
-  res.send(" from  user0");
-});
-app.get("/home/", (req, res) => {
-  res.send(" from  user");
-});
-app.get("/home.alam/user", (req, res) => {
-  res.send(" from  user2");
-});
-
-app.use("/home", (req, res) => {
-  res.send("from home");
-});
-
-app.use("/admin", checkBeforLogin);
-
-app.get("/admin/order", (req, res, next) => {
+app.post("/signup", async (req, res) => {
+  const userObj = new User({
+    firstName: "mohammad alam",
+    lastName: "ansari",
+    email: "alam@gmail.com",
+    age: 45,
+  });
   try {
-    console.log("order place");
-    res.send("your order are store and way to delivery");
-  } catch {}
+    await userObj.save();
+    res.send("adsfjadsdsa");
+  } catch (err) {
+    res.status(400).send("Error saving tje user:" + err.emssage);
+  }
 });
 
-app.listen(PORT, () => {
-  console.log(`listening on ${PORT}`);
-});
+connectToClusterAndDB()
+  .then(() => {
+    console.log("connect to cluster");
+    app.listen(PORT, () => {
+      console.log(`listening on ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.log("failed to connect cluster");
+    console.log(err.message);
+  });
